@@ -3,9 +3,10 @@
 
 struct my_process {
 
-	int process_id;	//random from 10,000
-	int cycles;		//from 1,000, 11,000
-	int memory;		//1KB to 100KB with a mean memory footprint of 20KB.
+	int process_id;		//random from 10,000
+	int cycles;			//from 1,000, 11,000
+	int memory;			//1KB to 100KB with a mean memory footprint of 20KB
+	int wait_time = 0;	//each process will have it's own time that it's had to wait
   
 	//constructor
 	my_process(int i){
