@@ -1,11 +1,14 @@
-//Manuel Vargas
-//Project
+/*
+Manuel Vargas
+Alish Shrestha
+Project
 
-//how to compile
-//	make
+how to compile
+	make
 
-//how to run	
-//	./main
+how to run	
+	./main
+*/
 
 #include <iostream>
 #include <stdlib.h> 
@@ -17,6 +20,7 @@ using namespace std;
 
 //my headers
 #include "my_process.h"	//contains structure definition
+//#include "round_robin.h"
 
 //generate k processes and returns vector with all processes
 vector <my_process> generate_processes(int k){
@@ -51,6 +55,12 @@ vector <my_process> generate_processes(int k){
 	//my_processes now stores all process objects
 	
 	
+	//will move this to each scheduling discipline for export
+	//writing results to file for analysis
+	//ofstream results;
+   	//results.open ("results.json",std::ios_base::app);
+	
+	
 	/*
 	//give results
 	cout<<endl<<"~Results~"<<endl;
@@ -69,6 +79,7 @@ vector <my_process> generate_processes(int k){
 	
 	return my_processes;	//return vector of datatype my_process
 }
+
 
 //"processes" vector holds all processes from generate_processes
 //processes are added to the "scheduler" vector every 50 cycles
@@ -146,39 +157,48 @@ void round_robin(vector <my_process> processes, int quantum){
 	}
 	
 	//writing results for analysis
-	cout<<"~~~~~~~~~~~~~~~~~~~~~~~"<<endl;
+	cout<<"~~~~~~~~~~~~~~~~~~~~~~~~~"<<endl;
 	cout<<"~ Round Robin Complete ~"<<endl;
 	cout<<"~ Average Wait Time: "<<wait_time/50<<endl;
 	cout<<"~ Penalty: "<<penalty<<endl;
-	cout<<"~~~~~~~~~~~~~~~~~~~~~~~"<<endl;
+	cout<<"~~~~~~~~~~~~~~~~~~~~~~~~~"<<endl;
 }
+
+
 
 int main(){
 	int k = 50;				//number of processes
 	int quantum = 50;		//how much time each process gets
-	int disciplines;		//user options 1, 2, or 3
+	int discipline;		//user options 1, 2, or 3
 	srand (time(NULL));		//init random
 
-	//switch that can switch which scheduling method to use
+	
 	cout<<endl<<"Enter Scheduling Discipline Number"<<endl;
-	cout<<"1 = Round Robin, 2 = SRT, 3 = SJF"<<endl;
-	cin>>disciplines;
+	cout<<"1 = Round Robin, 2 = FIFO, 3 = SJF"<<endl;
+	cin>>discipline;
 	
 	//generate 50 process with varying cycles and memory
 	//store result to "processes" vector
 	vector <my_process> processes = generate_processes(k);
 	
-	
-	switch(disciplines){
-		case 1:	//run "processes" through round_robin with quantum 50
+	//switch executes whichever discipline user wanted
+	//only RR works as of right now
+	switch(discipline){
+		case 1:	//Round Robin
+				//run "processes" through round_robin with quantum 50
 				round_robin(processes, quantum);
 				break;
-		case 2:
+		case 2: //FIFO
+				//
+				//fifo(processes);
 				break;
-		case 3:
+		case 3:	//SJF
+				//
+				//sjf(processes);
+				break;
+		default://if incorrect input, exit with error
+				cout<<"error: enter a number 1-3"<<endl;
 				break;
 	}
-
-
 	return 0;
 }
